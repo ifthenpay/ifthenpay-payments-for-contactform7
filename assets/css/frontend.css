@@ -1,0 +1,168 @@
+/* ifthenpay | Payments for Contact Form 7 — Frontend Styles */
+
+:root {
+	--iftp-fe-brand:              #0e6bab;
+	--iftp-fe-brand-dark:         #0a5a94;
+	--iftp-fe-warn-amber-border:  #fde68a;
+	--iftp-fe-warn-amber-text:    #92400e;
+	--iftp-fe-warn-pending-bg:    #fffae9;
+	--iftp-fe-warn-cancel-bg:     #fffbeb;
+	--iftp-fe-error-bg:           #fff5f4;
+	--iftp-fe-error-border:       #f0b8b4;
+	--iftp-fe-error-text:         #7f1d1d;
+  --iftp-fe-desabled-button:     #6b7280;
+}
+
+@font-face {
+	font-family: ifthenpay-icons;
+	src: url('../fonts/ifthenpay-icons.woff2') format('woff2'),
+	     url('../fonts/ifthenpay-icons.woff') format('woff'),
+	     url('../fonts/ifthenpay-icons.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+/* Payment field container */
+.iftp-cf7-payment-field {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	padding: 4px 0;
+}
+
+/* Method logos row */
+.iftp-cf7-payment-methods {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 10px;
+}
+
+.iftp-cf7-method-logo {
+	height: 28px;
+	width: auto;
+	object-fit: contain;
+	vertical-align: middle;
+}
+
+/* Pay button */
+.iftp-cf7-pay-button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	padding: 11px 24px;
+	background: var(--iftp-fe-brand);
+	color: #fff;
+	border: none;
+	border-radius: 6px;
+	font-size: 15px;
+	font-weight: 600;
+	line-height: 1.4;
+	cursor: pointer;
+	text-align: center;
+	transition: background 0.15s, opacity 0.15s;
+}
+
+/* Lower-specificity states before the :hover:not() guard (specificity 0,3,0) */
+.iftp-cf7-pay-button:focus-visible {
+	outline: 3px solid var(--iftp-fe-brand);
+	outline-offset: 2px;
+}
+
+.iftp-cf7-pay-button:disabled,
+/* stylelint-disable-next-line selector-class-pattern -- BEM modifier */
+.iftp-cf7-pay-button--disabled {
+	opacity: 0.55;
+	cursor: not-allowed;
+	background: var(--iftp-fe-desabled-button);
+}
+
+/* Misconfigured state — sets display:none, no conflict with hover's background */
+.iftp-cf7-is-misconfigured .iftp-cf7-pay-button {
+	display: none;
+}
+
+.iftp-cf7-pay-button:hover:not(:disabled) {
+	background: var(--iftp-fe-brand-dark);
+}
+
+/* Config warning (always red) */
+.iftp-cf7-config-warning {
+	background: var(--iftp-fe-error-bg);
+	border: 1px solid var(--iftp-fe-error-border);
+	border-radius: 6px;
+	padding: 12px 16px;
+}
+
+/* Shared error/config text */
+.iftp-cf7-config-warning p,
+.iftp-cf7-error-msg {
+	margin: 0;
+	font-size: 14px;
+	color: var(--iftp-fe-error-text);
+}
+
+/*
+ * Runtime warning container.
+ * Base has NO padding/border so an empty div is zero-height — the browser can
+ * still scroll to its anchor position without showing any blank space.
+ * Padding + border are added only when a status modifier class is present.
+ */
+.iftp-cf7-runtime-warning {
+	border-radius: 6px;
+}
+
+/* Shared padding + border for all active states */
+.iftp-cf7-runtime-warning.iftp-warn-pending,
+.iftp-cf7-runtime-warning.iftp-warn-cancel,
+.iftp-cf7-runtime-warning.iftp-warn-error {
+	padding: 12px 16px;
+	border: 1px solid transparent;
+}
+
+/* Pending — amber */
+.iftp-cf7-runtime-warning.iftp-warn-pending {
+	background: var(--iftp-fe-warn-pending-bg);
+	border-color: var(--iftp-fe-warn-amber-border);
+}
+
+/* Cancelled — amber */
+.iftp-cf7-runtime-warning.iftp-warn-cancel {
+	background: var(--iftp-fe-warn-cancel-bg);
+	border-color: var(--iftp-fe-warn-amber-border);
+}
+
+/* Pending & Cancelled share the same text colour */
+.iftp-cf7-runtime-warning.iftp-warn-pending p,
+.iftp-cf7-runtime-warning.iftp-warn-cancel p {
+	margin: 0;
+	font-size: 14px;
+	color: var(--iftp-fe-warn-amber-text);
+}
+
+/* Error / failed — red */
+.iftp-cf7-runtime-warning.iftp-warn-error {
+	background: var(--iftp-fe-error-bg);
+	border-color: var(--iftp-fe-error-border);
+}
+
+.iftp-cf7-runtime-warning.iftp-warn-error p {
+	margin: 0;
+	font-size: 14px;
+	color: var(--iftp-fe-error-text);
+}
+
+/* Icons on status message paragraphs */
+.iftp-msg-pending::before,
+.iftp-msg-cancel::before,
+.iftp-msg-error::before {
+	display: inline-block;
+	margin-right: 6px;
+	font-style: normal;
+	font-weight: 700;
+}
+
+.iftp-msg-pending::before { content: 'ℹ'; }
+.iftp-msg-cancel::before  { content: '⚠'; }
+.iftp-msg-error::before   { content: '✕'; }
